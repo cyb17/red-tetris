@@ -1,5 +1,4 @@
-// Define tetrominos
-const TETROMINOS = {
+export const TETROMINOS = {
   I: [[[1, 1, 1, 1]], [[1], [1], [1], [1]]],
   O: [
     [

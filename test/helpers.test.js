@@ -1,5 +1,5 @@
-import * as helper from './helpers';
-import { TETROMINOS } from './tetrominos';
+import * as helper from '../src/helpers';
+import { TETROMINOS } from '../src/tetrominos';
 
 describe('getRandomType', () => {
   const validTypes = ['I', 'O', 'T', 'L', 'J', 'Z', 'S'];

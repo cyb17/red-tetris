@@ -1,3 +1,12 @@
+export const EVENTS = [
+  { type: 'MOVE_LEFT' },
+  { type: 'MOVE_RIGHT' },
+  { type: 'ROTATE' },
+  { type: 'DROP' },
+  { type: 'HARD_DROP' },
+  { type: 'TICK' },
+];
+
 export const TETROMINOS = {
   I: [[[1, 1, 1, 1]], [[1], [1], [1], [1]]],
   O: [

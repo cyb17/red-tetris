@@ -1,27 +1,8 @@
 import { useEffect, useReducer } from 'react';
 import { reducer } from './game/reducer';
 import { initialState } from './game/state';
+import { renderBoard } from './game/helpers';
 import { EVENTS } from './game/events';
-import { TETROMINOS } from './game/tetrominos';
-
-function renderBoard(state) {
-  const board = state.board.map(row => [...row]);
-  const matrix = TETROMINOS[state.piece.type][0];
-
-  for (let y = 0; y < matrix.length; y++) {
-    for (let x = 0; x < matrix[y].length; x++) {
-      if (matrix[y][x]) {
-        const by = state.piece.y + y;
-        const bx = state.piece.x + x;
-        if (by >= 0 && by < 20) {
-          board[by][bx] = 1;
-        }
-      }
-    }
-  }
-
-  return board;
-}
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -32,6 +13,25 @@ export default function App() {
     }, 500);
 
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.key === 'ArrowLeft') {
+        dispatch({ type: EVENTS.MOVE_LEFT });
+      } else if (e.key === 'ArrowRight') {
+        dispatch({ type: EVENTS.MOVE_RIGHT });
+      } else if (e.key === 'ArrowDown') {
+        dispatch({ type: EVENTS.SOFT_DROP });
+      } else if (e.key === 'ArrowUp') {
+        dispatch({ type: EVENTS.ROTATE });
+      } else if (e.key === ' ') {
+        dispatch({ type: EVENTS.HARD_DROP });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const board = renderBoard(state);

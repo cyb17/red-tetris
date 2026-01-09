@@ -1,36 +1,95 @@
-import { EVENTS } from './events';
-import { TETROMINOS } from './tetrominos';
+import { EVENTS } from './events.js';
+import { TETROMINOS } from './tetrominos.js';
+import { getRandomType } from './state.js';
+import { canMove, renderBoard, clearLines } from './helpers.js';
 
-function canMove(state, dx, dy) {
-  const matrix = TETROMINOS[state.piece.type][0];
+function movePiece(state, dx, dy) {
+  if (!canMove(state, dx, dy)) return state;
 
-  for (let y = 0; y < matrix.length; y++) {
-    for (let x = 0; x < matrix[y].length; x++) {
-      if (!matrix[y][x]) continue;
+  return {
+    ...state,
+    piece: {
+      ...state.piece,
+      x: state.piece.x + dx,
+      y: state.piece.y + dy,
+    },
+  };
+}
 
-      const nx = state.piece.x + x + dx;
-      const ny = state.piece.y + y + dy;
+function applyTick(state) {
+  if (!canMove(state, 0, 1)) return reducer(state, { type: EVENTS.LOCK_PIECE });
 
-      if (ny >= 20 || nx < 0 || nx >= 10) return false;
-    }
+  return {
+    ...state,
+    piece: {
+      ...state.piece,
+      y: state.piece.y + 1,
+    },
+  };
+}
+
+function rotatePiece(state) {
+  const newRotation = Math.floor((state.piece.rotation + 1) % TETROMINOS[state.piece.type].length);
+
+  return {
+    ...state,
+    piece: {
+      ...state.piece,
+      rotation: newRotation,
+    },
+  };
+}
+
+function hardDrop(state) {
+  let newY = state.piece.y;
+
+  while (canMove({ ...state, piece: { ...state.piece, y: newY } }, 0, 1)) {
+    newY++;
   }
-  return true;
+
+  const newState = {
+    ...state,
+    piece: {
+      ...state.piece,
+      y: newY,
+    },
+  };
+
+  return reducer(newState, { type: EVENTS.LOCK_PIECE });
+}
+
+function lockPiece(state) {
+  const lockedBoard = renderBoard(state);
+  const clearedBoard = clearLines(lockedBoard);
+
+  return {
+    ...state,
+    board: clearedBoard,
+    piece: {
+      type: getRandomType(),
+      rotation: 0,
+      x: 4,
+      y: 0,
+    },
+  };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
+    case EVENTS.MOVE_LEFT:
+      return movePiece(state, -1, 0);
+    case EVENTS.MOVE_RIGHT:
+      return movePiece(state, 1, 0);
+    case EVENTS.SOFT_DROP:
+      return movePiece(state, 0, 1);
     case EVENTS.TICK:
-      if (canMove(state, 0, 1)) {
-        return {
-          ...state,
-          piece: {
-            ...state.piece,
-            y: state.piece.y + 1,
-          },
-        };
-      }
-      return state;
-
+      return applyTick(state);
+    case EVENTS.ROTATE:
+      return rotatePiece(state);
+    case EVENTS.HARD_DROP:
+      return hardDrop(state);
+    case EVENTS.LOCK_PIECE:
+      return lockPiece(state);
     default:
       return state;
   }

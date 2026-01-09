@@ -1,10 +1,9 @@
-import { EVENTS } from './events.js';
-import { TETROMINOS } from './tetrominos.js';
-import { getRandomType } from './state.js';
-import { canMove, renderBoard, clearLines } from './helpers.js';
+import { TETROMINOS, EVENTS } from './constants.js';
+import { generateRandomPiece } from './state.js';
+import { canMove, renderBoard, clearLines, canRotate } from './helpers.js';
 
 function movePiece(state, dx, dy) {
-  if (!canMove(state, dx, dy)) return state;
+  if (!canMove(state.board, state.piece, dx, dy)) return state;
 
   return {
     ...state,
@@ -17,7 +16,9 @@ function movePiece(state, dx, dy) {
 }
 
 function applyTick(state) {
-  if (!canMove(state, 0, 1)) return reducer(state, { type: EVENTS.LOCK_PIECE });
+  if (!canMove(state.board, state.piece, 0, 1)) {
+    return reducer(state, { type: EVENTS.LOCK_PIECE });
+  }
 
   return {
     ...state,
@@ -30,30 +31,46 @@ function applyTick(state) {
 
 function rotatePiece(state) {
   const newRotation = Math.floor((state.piece.rotation + 1) % TETROMINOS[state.piece.type].length);
-
-  return {
+  const newState = {
     ...state,
     piece: {
       ...state.piece,
       rotation: newRotation,
     },
   };
+  if (canRotate(newState.board, newState.piece)) {
+    return newState;
+  }
+
+  // les wall kicks (ajustements de position)
+  const wallKicks = [
+    [1, 0],
+    [-1, 0],
+    [2, 0],
+    [-2, 0],
+    [0, -1],
+    [1, -1], // Diagonale haut-droite
+    [-1, -1], // Diagonale haut-gauche
+  ];
+
+  for (const [dx, dy] of wallKicks) {
+    if (canRotate(newState.board, newState.piece, dx, dy)) {
+      newState.piece.x = state.piece.x + dx;
+      newState.piece.y = state.piece.y + dy;
+      return newState;
+    }
+  }
+
+  return state;
 }
 
 function hardDrop(state) {
+  let newState = { ...state };
   let newY = state.piece.y;
-
-  while (canMove({ ...state, piece: { ...state.piece, y: newY } }, 0, 1)) {
+  while (canMove(newState.board, { ...newState.piece, y: newY }, 0, 1)) {
     newY++;
   }
-
-  const newState = {
-    ...state,
-    piece: {
-      ...state.piece,
-      y: newY,
-    },
-  };
+  newState.piece.y = newY;
 
   return reducer(newState, { type: EVENTS.LOCK_PIECE });
 }
@@ -65,12 +82,7 @@ function lockPiece(state) {
   return {
     ...state,
     board: clearedBoard,
-    piece: {
-      type: getRandomType(),
-      rotation: 0,
-      x: 4,
-      y: 0,
-    },
+    piece: generateRandomPiece(),
   };
 }
 

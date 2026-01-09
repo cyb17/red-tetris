@@ -2,7 +2,7 @@ import { useEffect, useReducer } from 'react';
 import { reducer } from './game/reducer';
 import { initialState } from './game/state';
 import { renderBoard } from './game/helpers';
-import { EVENTS } from './game/events';
+import { EVENTS } from './game/constants';
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -10,7 +10,7 @@ export default function App() {
   useEffect(() => {
     const id = setInterval(() => {
       dispatch({ type: EVENTS.TICK });
-    }, 500);
+    }, 1000);
 
     return () => clearInterval(id);
   }, []);

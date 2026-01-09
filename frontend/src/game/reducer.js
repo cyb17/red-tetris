@@ -1,5 +1,5 @@
-import { TETROMINOS, EVENTS } from './constants.js';
-import { generateRandomPiece } from './state.js';
+import { TETROMINOS, EVENTS, STATUS } from './constants.js';
+import { generateRandomPiece } from './helpers.js';
 import { canMove, renderBoard, clearLines, canRotate } from './helpers.js';
 
 function movePiece(state, dx, dy) {
@@ -16,17 +16,14 @@ function movePiece(state, dx, dy) {
 }
 
 function applyTick(state) {
-  if (!canMove(state.board, state.piece, 0, 1)) {
-    return reducer(state, { type: EVENTS.LOCK_PIECE });
+  let newState = { ...state };
+
+  if (!canMove(newState.board, newState.piece, 0, 1)) {
+    return reducer(newState, { type: EVENTS.LOCK_PIECE });
   }
 
-  return {
-    ...state,
-    piece: {
-      ...state.piece,
-      y: state.piece.y + 1,
-    },
-  };
+  newState.piece.y = newState.piece.y + 1;
+  return newState;
 }
 
 function rotatePiece(state) {
@@ -42,15 +39,15 @@ function rotatePiece(state) {
     return newState;
   }
 
-  // les wall kicks (ajustements de position)
+  // wall kicks
   const wallKicks = [
     [1, 0],
     [-1, 0],
     [2, 0],
     [-2, 0],
     [0, -1],
-    [1, -1], // Diagonale haut-droite
-    [-1, -1], // Diagonale haut-gauche
+    [1, -1],
+    [-1, -1],
   ];
 
   for (const [dx, dy] of wallKicks) {
@@ -78,11 +75,21 @@ function hardDrop(state) {
 function lockPiece(state) {
   const lockedBoard = renderBoard(state);
   const clearedBoard = clearLines(lockedBoard);
+  const newPiece = generateRandomPiece();
+
+  if (!canMove(clearedBoard, newPiece, 0, 0)) {
+    return {
+      ...state,
+      board: clearedBoard,
+      piece: newPiece,
+      status: STATUS.GAME_OVER,
+    };
+  }
 
   return {
     ...state,
     board: clearedBoard,
-    piece: generateRandomPiece(),
+    piece: newPiece,
   };
 }
 

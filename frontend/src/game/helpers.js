@@ -71,3 +71,17 @@ export function clearLines(board) {
 
   return newBoard;
 }
+
+export const generateRandomPiece = () => {
+  const keys = Object.keys(TETROMINOS);
+  const type = keys[Math.floor(Math.random() * keys.length)];
+
+  return {
+    type,
+    rotation: 0,
+    x: 4,
+    y: 0,
+  };
+};
+
+export function isStillAlive(board) {}

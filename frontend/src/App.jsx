@@ -2,21 +2,25 @@ import { useEffect, useReducer } from 'react';
 import { reducer } from './game/reducer';
 import { initialState } from './game/state';
 import { renderBoard } from './game/helpers';
-import { EVENTS } from './game/constants';
+import { EVENTS, STATUS } from './game/constants';
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    if (state.status === STATUS.GAME_OVER) return;
+
     const id = setInterval(() => {
       dispatch({ type: EVENTS.TICK });
     }, 1000);
 
     return () => clearInterval(id);
-  }, []);
+  }, [state.status]);
 
   useEffect(() => {
     const handleKeyDown = e => {
+      if (state.status === STATUS.GAME_OVER) return;
+
       if (e.key === 'ArrowLeft') {
         dispatch({ type: EVENTS.MOVE_LEFT });
       } else if (e.key === 'ArrowRight') {
@@ -32,9 +36,10 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [state.status]);
 
   const board = renderBoard(state);
+  console.log('STATE:', state);
 
   return (
     <div
@@ -55,6 +60,20 @@ export default function App() {
           }}
         />
       ))}
+      {state.status === STATUS.GAME_OVER ? (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '24px',
+            color: 'white',
+          }}
+        >
+          Game Over
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -19,7 +19,7 @@ export function renderBoard(state) {
   return board;
 }
 
-export function canMove(board, piece, dx, dy) {
+export function canMove(board, piece, dx = 0, dy = 0) {
   const matrix = TETROMINOS[piece.type][piece.rotation];
 
   for (let y = 0; y < matrix.length; y++) {
@@ -36,40 +36,34 @@ export function canMove(board, piece, dx, dy) {
   return true;
 }
 
-export function canRotate(board, piece, offsetX = 0, offsetY = 0) {
-  const matrix = TETROMINOS[piece.type][piece.rotation];
-
-  for (let y = 0; y < matrix.length; y++) {
-    for (let x = 0; x < matrix[y].length; x++) {
-      if (!matrix[y][x]) continue;
-
-      const nx = piece.x + x + offsetX;
-      const ny = piece.y + y + offsetY;
-
-      if (nx < 0 || nx >= 10 || ny >= 20) return false;
-      if (ny >= 0 && board[ny][nx] === 1) return false;
-    }
-  }
-  return true;
-}
-
-export function clearLines(board) {
-  const newBoard = [];
-  let linesCleared = 0;
+export function clearLines(board, lines) {
+  const clearedBoard = [];
+  let clearedLines = lines;
 
   for (let y = board.length - 1; y >= 0; y--) {
     if (board[y].every(cell => cell === 1)) {
-      linesCleared++;
+      clearedLines++;
     } else {
-      newBoard.unshift(board[y]);
+      clearedBoard.unshift(board[y]);
     }
   }
 
-  while (newBoard.length < 20) {
-    newBoard.unshift(Array(10).fill(0));
+  while (clearedBoard.length < 20) {
+    clearedBoard.unshift(Array(10).fill(0));
   }
 
-  return newBoard;
+  return { clearedBoard, clearedLines };
+}
+
+export function updateScore(score, board) {
+  const scoreSystem = [0, 100, 300, 500, 800];
+  let linesCleared = 0;
+
+  for (let y = board.length - 1; y >= 0; y--) {
+    if (board[y].every(cell => cell === 1)) linesCleared++;
+  }
+
+  return scoreSystem[linesCleared] + score;
 }
 
 export const generateRandomPiece = () => {
@@ -84,4 +78,42 @@ export const generateRandomPiece = () => {
   };
 };
 
-export function isStillAlive(board) {}
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+export function generate7Plus2Bag() {
+  const keys = Object.keys(TETROMINOS);
+  const bag = [...keys];
+
+  for (let i = 0; i < 2; i++) {
+    const randomType = keys[Math.floor(Math.random() * keys.length)];
+    bag.push(randomType);
+  }
+
+  const types = shuffle(bag);
+  const pieces = types.map(type => ({
+    type,
+    rotation: 0,
+    x: 4,
+    y: 0,
+  }));
+
+  return pieces;
+}
+
+export function updatePieces(nextPieces) {
+  let newNextPieces = [...nextPieces];
+  const newPiece = newNextPieces.shift();
+
+  if (newNextPieces.length < 4) {
+    newNextPieces = [...newNextPieces, ...generate7Plus2Bag()];
+  }
+
+  return { newPiece, newNextPieces };
+}

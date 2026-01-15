@@ -1,6 +1,5 @@
-import { TETROMINOS, EVENTS, STATUS } from './constants.js';
-import { generateRandomPiece } from './helpers.js';
-import { canMove, renderBoard, clearLines, canRotate } from './helpers.js';
+import { TETROMINOS, EVENTS, GAME_STATUS } from './constants.js';
+import { canMove, renderBoard, clearLines, updateScore, updatePieces } from './helpers.js';
 
 function movePiece(state, dx, dy) {
   if (!canMove(state.board, state.piece, dx, dy)) return state;
@@ -16,30 +15,34 @@ function movePiece(state, dx, dy) {
 }
 
 function applyTick(state) {
-  let newState = { ...state };
-
-  if (!canMove(newState.board, newState.piece, 0, 1)) {
-    return reducer(newState, { type: EVENTS.LOCK_PIECE });
+  if (!canMove(state.board, state.piece, 0, 1)) {
+    return reducer(state, { type: EVENTS.LOCK_PIECE });
   }
 
-  newState.piece.y = newState.piece.y + 1;
-  return newState;
-}
-
-function rotatePiece(state) {
-  const newRotation = Math.floor((state.piece.rotation + 1) % TETROMINOS[state.piece.type].length);
-  const newState = {
+  return {
     ...state,
     piece: {
       ...state.piece,
-      rotation: newRotation,
+      y: state.piece.y + 1,
     },
   };
-  if (canRotate(newState.board, newState.piece)) {
-    return newState;
+}
+
+function rotatePiece(state) {
+  const newRotation = (state.piece.rotation + 1) % TETROMINOS[state.piece.type].length;
+  const rotatedPiece = {
+    ...state.piece,
+    rotation: newRotation,
+  };
+
+  if (canMove(state.board, rotatedPiece)) {
+    return {
+      ...state,
+      piece: rotatedPiece,
+    };
   }
 
-  // wall kicks
+  // apply rotation system
   const wallKicks = [
     [1, 0],
     [-1, 0],
@@ -51,10 +54,15 @@ function rotatePiece(state) {
   ];
 
   for (const [dx, dy] of wallKicks) {
-    if (canRotate(newState.board, newState.piece, dx, dy)) {
-      newState.piece.x = state.piece.x + dx;
-      newState.piece.y = state.piece.y + dy;
-      return newState;
+    if (canMove(state.board, rotatedPiece, dx, dy)) {
+      return {
+        ...state,
+        piece: {
+          ...rotatedPiece,
+          x: rotatedPiece.x + dx,
+          y: rotatedPiece.y + dy,
+        },
+      };
     }
   }
 
@@ -62,34 +70,46 @@ function rotatePiece(state) {
 }
 
 function hardDrop(state) {
-  let newState = { ...state };
   let newY = state.piece.y;
-  while (canMove(newState.board, { ...newState.piece, y: newY }, 0, 1)) {
+  while (canMove(state.board, { ...state.piece, y: newY }, 0, 1)) {
     newY++;
   }
-  newState.piece.y = newY;
+
+  const newState = {
+    ...state,
+    piece: {
+      ...state.piece,
+      y: newY,
+    },
+  };
 
   return reducer(newState, { type: EVENTS.LOCK_PIECE });
 }
 
 function lockPiece(state) {
   const lockedBoard = renderBoard(state);
-  const clearedBoard = clearLines(lockedBoard);
-  const newPiece = generateRandomPiece();
+  const { clearedBoard, clearedLines } = clearLines(lockedBoard, state.clearedLines);
+  const { newPiece, newNextPieces } = updatePieces(state.nextPieces);
 
   if (!canMove(clearedBoard, newPiece, 0, 0)) {
     return {
       ...state,
       board: clearedBoard,
       piece: newPiece,
-      status: STATUS.GAME_OVER,
+      nextPieces: newNextPieces,
+      status: GAME_STATUS.GAME_OVER,
     };
   }
+
+  const score = updateScore(state.score, lockedBoard);
 
   return {
     ...state,
     board: clearedBoard,
     piece: newPiece,
+    nextPieces: newNextPieces,
+    score: score,
+    clearedLines: clearedLines,
   };
 }
 

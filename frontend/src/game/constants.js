@@ -1,7 +1,8 @@
-export const STATUS = {
+export const GAME_STATUS = {
   RUNNING: 'RUNNING',
   WAITING: 'WAITING',
   GAME_OVER: 'GAME_OVER',
+  PAUSED: 'PAUSED',
 };
 
 export const EVENTS = {

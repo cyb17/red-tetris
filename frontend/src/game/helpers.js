@@ -1,28 +1,30 @@
 import { TETROMINOS } from './constants.js';
+import { generate7Plus2Bag } from './state.js';
 
-export function renderBoard(state) {
-  const board = state.board.map(row => [...row]);
-  const matrix = TETROMINOS[state.piece.type][state.piece.rotation];
-
-  for (let y = 0; y < matrix.length; y++) {
-    for (let x = 0; x < matrix[y].length; x++) {
-      if (matrix[y][x]) {
-        const by = state.piece.y + y;
-        const bx = state.piece.x + x;
-        if (by >= 0 && by < 20 && bx >= 0 && bx < 10) {
-          board[by][bx] = 1;
-        }
-      }
-    }
-  }
-
-  return board;
-}
-
-export function canMove(board, piece, dx = 0, dy = 0) {
+export function mergePieceToBoard(board, piece) {
+  const newBoard = board.map(row => [...row]);
   const matrix = TETROMINOS[piece.type][piece.rotation];
 
   for (let y = 0; y < matrix.length; y++) {
+    for (let x = 0; x < matrix[y].length; x++) {
+      if (!matrix[y][x]) continue;
+
+      const by = piece.y + y;
+      const bx = piece.x + x;
+
+      if (by < 0) continue;
+
+      newBoard[by][bx] = 1;
+    }
+  }
+
+  return newBoard;
+}
+
+export function canMove(board, piece, dx, dy) {
+  const matrix = TETROMINOS[piece.type][piece.rotation];
+
+  for (let y = matrix.length - 1; y >= 0; y--) {
     for (let x = 0; x < matrix[y].length; x++) {
       if (!matrix[y][x]) continue;
 
@@ -64,47 +66,6 @@ export function updateScore(score, board) {
   }
 
   return scoreSystem[linesCleared] + score;
-}
-
-export const generateRandomPiece = () => {
-  const keys = Object.keys(TETROMINOS);
-  const type = keys[Math.floor(Math.random() * keys.length)];
-
-  return {
-    type,
-    rotation: 0,
-    x: 4,
-    y: 0,
-  };
-};
-
-function shuffle(array) {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-export function generate7Plus2Bag() {
-  const keys = Object.keys(TETROMINOS);
-  const bag = [...keys];
-
-  for (let i = 0; i < 2; i++) {
-    const randomType = keys[Math.floor(Math.random() * keys.length)];
-    bag.push(randomType);
-  }
-
-  const types = shuffle(bag);
-  const pieces = types.map(type => ({
-    type,
-    rotation: 0,
-    x: 4,
-    y: 0,
-  }));
-
-  return pieces;
 }
 
 export function updatePieces(nextPieces) {

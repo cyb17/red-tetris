@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from 'react';
 import { reducer } from './game/reducer';
 import { initialState } from './game/state';
-import { renderBoard } from './game/helpers';
-import { EVENTS, GAME_STATUS } from './game/constants';
+import { mergePieceToBoard } from './game/helpers';
+import { EVENTS, GAME_STATUS, TETROMINOS } from './game/constants';
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -38,8 +38,11 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [state.status]);
 
-  const board = renderBoard(state);
+  const board = mergePieceToBoard(state.board, state.piece);
+  const matrix = TETROMINOS[state.piece.type][state.piece.rotation];
+
   console.log('STATE:', state);
+  console.log('MATRIX:', matrix);
 
   return (
     <>

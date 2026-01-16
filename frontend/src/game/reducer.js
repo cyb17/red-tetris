@@ -1,5 +1,5 @@
 import { TETROMINOS, EVENTS, GAME_STATUS } from './constants.js';
-import { canMove, renderBoard, clearLines, updateScore, updatePieces } from './helpers.js';
+import { canMove, mergePieceToBoard, clearLines, updateScore, updatePieces } from './helpers.js';
 
 function movePiece(state, dx, dy) {
   if (!canMove(state.board, state.piece, dx, dy)) return state;
@@ -35,14 +35,13 @@ function rotatePiece(state) {
     rotation: newRotation,
   };
 
-  if (canMove(state.board, rotatedPiece)) {
+  if (canMove(state.board, rotatedPiece, 0, 0)) {
     return {
       ...state,
       piece: rotatedPiece,
     };
   }
 
-  // apply rotation system
   const wallKicks = [
     [1, 0],
     [-1, 0],
@@ -87,21 +86,17 @@ function hardDrop(state) {
 }
 
 function lockPiece(state) {
-  const lockedBoard = renderBoard(state);
+  const lockedBoard = mergePieceToBoard(state.board, state.piece);
   const { clearedBoard, clearedLines } = clearLines(lockedBoard, state.clearedLines);
   const { newPiece, newNextPieces } = updatePieces(state.nextPieces);
+  const score = updateScore(state.score, lockedBoard);
 
   if (!canMove(clearedBoard, newPiece, 0, 0)) {
     return {
       ...state,
-      board: clearedBoard,
-      piece: newPiece,
-      nextPieces: newNextPieces,
       status: GAME_STATUS.GAME_OVER,
     };
   }
-
-  const score = updateScore(state.score, lockedBoard);
 
   return {
     ...state,

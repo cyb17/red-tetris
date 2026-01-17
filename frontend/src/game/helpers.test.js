@@ -8,7 +8,6 @@ describe('helpers tests', () => {
       const piece = { type: 'I', rotation: 1, x: 0, y: -2 };
 
       const newBoard = mergePieceToBoard(board, piece);
-      console.log('new board', newBoard);
       const filledCells = newBoard.flat().filter(cell => cell === 1).length;
 
       expect(filledCells).toBe(2);

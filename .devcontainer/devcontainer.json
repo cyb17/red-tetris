@@ -27,5 +27,5 @@
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "yarn install --cwd frontend && yarn install --cwd backend"
+  "postCreateCommand": "apk add --no-cache git && yarn install --cwd frontend && yarn install --cwd backend"
 }

@@ -46,7 +46,7 @@ export function createBoard() {
 }
 
 export const initialState = {
-  status: GAME_STATUS.RUNNING,
+  status: GAME_STATUS.WAITING,
   board: createBoard(),
   piece: generateRandomPiece(),
   nextPieces: generate7Plus2Bag(),

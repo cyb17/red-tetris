@@ -6,6 +6,7 @@ export const GAME_STATUS = {
 };
 
 export const EVENTS = {
+  START: 'START',
   TICK: 'TICK',
   MOVE_LEFT: 'MOVE_LEFT',
   MOVE_RIGHT: 'MOVE_RIGHT',

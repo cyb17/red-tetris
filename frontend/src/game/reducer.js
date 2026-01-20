@@ -1,5 +1,5 @@
-import { TETROMINOS, EVENTS, GAME_STATUS } from './constants.js';
-import { canMove, mergePieceToBoard, clearLines, updateScore, updatePieces } from './helpers.js';
+import { EVENTS, GAME_STATUS, TETROMINOS } from './constants.js';
+import { canMove, clearLines, mergePieceToBoard, updatePieces, updateScore } from './helpers.js';
 
 function movePiece(state, dx, dy) {
   if (!canMove(state.board, state.piece, dx, dy)) return state;
@@ -110,6 +110,11 @@ function lockPiece(state) {
 
 export function reducer(state, action) {
   switch (action.type) {
+    case EVENTS.START:
+      return {
+        ...state,
+        status: GAME_STATUS.RUNNING,
+      };
     case EVENTS.MOVE_LEFT:
       return movePiece(state, -1, 0);
     case EVENTS.MOVE_RIGHT:

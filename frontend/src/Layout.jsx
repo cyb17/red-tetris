@@ -3,8 +3,8 @@ import Navbar from './components/Navbar';
 
 export default function Layout() {
   return (
-    <div>
-      <header>
+    <div className="min-h-screen flex flex-col justify-between p-2">
+      <header className="">
         <Navbar />
       </header>
 

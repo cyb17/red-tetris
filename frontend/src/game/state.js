@@ -41,13 +41,13 @@ export const generateRandomPiece = () => {
   };
 };
 
-export function createBoard() {
-  return Array.from({ length: 20 }, () => Array(10).fill(0));
+export function createBoard(y, x) {
+  return Array.from({ length: y }, () => Array(x).fill(0));
 }
 
 export const initialState = {
   status: GAME_STATUS.WAITING,
-  board: createBoard(),
+  board: createBoard(20, 10),
   piece: generateRandomPiece(),
   nextPieces: generate7Plus2Bag(),
   score: 0,

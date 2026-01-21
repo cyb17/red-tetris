@@ -1,6 +1,6 @@
-import { describe, test, expect, beforeEach } from '@jest/globals';
-import { reducer } from './reducer.js';
+import { beforeEach, describe, expect, test } from '@jest/globals';
 import { EVENTS, GAME_STATUS } from './constants.js';
+import { reducer } from './reducer.js';
 import { createBoard } from './state.js';
 
 describe('reducer', () => {
@@ -8,7 +8,7 @@ describe('reducer', () => {
 
   beforeEach(() => {
     mockState = {
-      board: createBoard(),
+      board: createBoard(20, 10),
       piece: { type: 'I', rotation: 0, x: 4, y: 5 },
       nextPieces: [
         { type: 'O', rotation: 0, x: 3, y: -1 },

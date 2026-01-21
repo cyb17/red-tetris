@@ -1,10 +1,12 @@
-import { mergePieceToBoard, canMove, clearLines, updateScore } from './helpers.js';
+import { canMove, clearLines, mergePieceToBoard, updateScore } from './helpers.js';
 import { createBoard } from './state.js';
 
 describe('helpers tests', () => {
   describe('mergePieceToBoard', () => {
-    test('should not merge piece parts outside board (y < 0)', () => {
-      const board = createBoard();
+    test('should merge the piece into the board when the placement is valid', () => {});
+
+    test('should not merge piece parts outside board (y < `0)', () => {
+      const board = createBoard(20, 10);
       const piece = { type: 'I', rotation: 1, x: 0, y: -2 };
 
       const newBoard = mergePieceToBoard(board, piece);
@@ -17,7 +19,7 @@ describe('helpers tests', () => {
   });
 
   describe('canMove', () => {
-    const emptyBoard = createBoard();
+    const emptyBoard = createBoard(20, 10);
 
     test('should return true for valid movements', () => {
       const piece = { type: 'I', rotation: 0, x: 3, y: 0 };
@@ -42,7 +44,7 @@ describe('helpers tests', () => {
 
   describe('clearLines', () => {
     test('should clear complete lines and maintain board size', () => {
-      const board = createBoard();
+      const board = createBoard(20, 10);
       board[19] = Array(10).fill(1);
       board[18] = Array(10).fill(1);
 
@@ -53,7 +55,7 @@ describe('helpers tests', () => {
     });
 
     test('should not clear incomplete lines', () => {
-      const board = createBoard();
+      const board = createBoard(20, 10);
       board[19] = [1, 1, 1, 1, 0, 1, 1, 1, 1, 1];
 
       const { clearedLines } = clearLines(board, 0);
@@ -63,12 +65,12 @@ describe('helpers tests', () => {
 
   describe('updateScore', () => {
     test('should return current score when no lines cleared', () => {
-      const board = createBoard();
+      const board = createBoard(20, 10);
       expect(updateScore(100, board)).toBe(100);
     });
 
     test('should update score for cleared lines', () => {
-      const board = createBoard();
+      const board = createBoard(20, 10);
       board[19] = Array(10).fill(1);
       board[18] = Array(10).fill(1);
       board[17] = Array(10).fill(1);

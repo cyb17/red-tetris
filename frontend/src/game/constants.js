@@ -1,8 +1,8 @@
 export const GAME_STATUS = {
-  RUNNING: 'RUNNING',
   WAITING: 'WAITING',
-  GAME_OVER: 'GAME_OVER',
   PAUSED: 'PAUSED',
+  RUNNING: 'RUNNING',
+  GAME_OVER: 'GAME_OVER',
 };
 
 export const EVENTS = {
@@ -89,8 +89,9 @@ export const TETROMINOS = {
   ],
   O: [
     [
-      [1, 1],
-      [1, 1],
+      [0, 1, 1, 0],
+      [0, 1, 1, 0],
+      [0, 0, 0, 0],
     ],
   ],
   S: [

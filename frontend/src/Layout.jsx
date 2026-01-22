@@ -12,7 +12,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer>Built with ❤️</footer>
+      <footer className="text-center">Built with ❤️</footer>
     </div>
   );
 }

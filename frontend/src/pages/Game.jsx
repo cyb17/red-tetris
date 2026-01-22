@@ -49,6 +49,10 @@ export default function Game() {
   return (
     <div className="flex justify-center gap-5">
       <div>
+        <div>
+          <button onClick={() => dispatch({ type: EVENTS.PAUSE })}>Pause</button>
+          <button onClick={() => dispatch({ type: EVENTS.START })}>Play</button>
+        </div>
         <div className="relative grid grid-rows-[repeat(20,20px)] grid-cols-[repeat(10,20px)] gap-px">
           {board.flat().map((cell, i) => (
             <div key={i} className={`w-5 h-5 ${cell ? 'bg-green-400' : 'bg-gray-900'}`} />
@@ -56,11 +60,6 @@ export default function Game() {
           {state.status === GAME_STATUS.WAITING ? (
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <button onClick={() => dispatch({ type: EVENTS.START })}>Play</button>
-            </div>
-          ) : null}
-          {state.status === GAME_STATUS.PAUSED ? (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <button onClick={() => dispatch({ type: EVENTS.PAUSE })}>Pause</button>
             </div>
           ) : null}
           {state.status === GAME_STATUS.GAME_OVER ? (

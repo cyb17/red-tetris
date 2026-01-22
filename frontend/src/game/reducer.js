@@ -115,6 +115,11 @@ export function reducer(state, action) {
         ...state,
         status: GAME_STATUS.RUNNING,
       };
+    case EVENTS.PAUSE:
+      return {
+        ...state,
+        status: GAME_STATUS.PAUSED,
+      };
     case EVENTS.MOVE_LEFT:
       return movePiece(state, -1, 0);
     case EVENTS.MOVE_RIGHT:

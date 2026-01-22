@@ -23,7 +23,7 @@ export function generate7Plus2Bag() {
     type,
     rotation: 0,
     x: 3,
-    y: -1,
+    y: 0,
   }));
 
   return pieces;
@@ -37,7 +37,7 @@ export const generateRandomPiece = () => {
     type,
     rotation: 0,
     x: 3,
-    y: -1,
+    y: 0,
   };
 };
 

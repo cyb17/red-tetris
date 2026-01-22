@@ -3,8 +3,6 @@ import { createBoard } from './state.js';
 
 describe('helpers tests', () => {
   describe('mergePieceToBoard', () => {
-    test('should merge the piece into the board when the placement is valid', () => {});
-
     test('should not merge piece parts outside board (y < `0)', () => {
       const board = createBoard(20, 10);
       const piece = { type: 'I', rotation: 1, x: 0, y: -2 };

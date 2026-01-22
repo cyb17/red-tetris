@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from 'react';
-import { EVENTS, GAME_STATUS, TETROMINOS } from '../game/constants';
+import NextPiece from '../components/NextPiece';
+import { EVENTS, GAME_STATUS } from '../game/constants';
 import { mergePieceToBoard } from '../game/helpers';
 import { reducer } from '../game/reducer';
 import { initialState } from '../game/state';
@@ -43,6 +44,8 @@ export default function Game() {
       ? state.board
       : mergePieceToBoard(state.board, state.piece);
 
+  console.log('STATE : ', state);
+
   return (
     <div className="flex justify-center gap-5">
       <div>
@@ -53,6 +56,11 @@ export default function Game() {
           {state.status === GAME_STATUS.WAITING ? (
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <button onClick={() => dispatch({ type: EVENTS.START })}>Play</button>
+            </div>
+          ) : null}
+          {state.status === GAME_STATUS.PAUSED ? (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <button onClick={() => dispatch({ type: EVENTS.PAUSE })}>Pause</button>
             </div>
           ) : null}
           {state.status === GAME_STATUS.GAME_OVER ? (
@@ -66,36 +74,9 @@ export default function Game() {
         <div>
           <div className="text-black mb-3 text-center">Next</div>
           <div className="flex flex-col gap-3">
-            {state.nextPieces.slice(0, 3).map((piece, idx) => {
-              const matrix = TETROMINOS[piece.type][0];
-              // const renderPiece = (board, pieceMatrix) => {
-              //   if (pieceMatrix.length > board.length)
-              // }
-              const board = mergePieceToBoard(
-                Array.from({ length: 4 }, () => Array(4).fill(0)),
-                piece
-              );
-              console.log('MATRIX :', matrix);
-              console.log('BOARD:', board);
-              return (
-                <div key={idx} className="bg-gray-800 rounded">
-                  <div
-                    className="grid gap-px"
-                    style={{
-                      gridTemplateRows: `repeat(${matrix.length}, 16px)`,
-                      gridTemplateColumns: `repeat(${matrix[0].length}, 16px)`,
-                    }}
-                  >
-                    {matrix.flat().map((cell, i) => (
-                      <div
-                        key={i}
-                        className={`w-4 h-4 ${cell ? 'bg-green-400' : 'bg-transparent'}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+            {state.nextPieces.slice(0, 3).map((piece, idx) => (
+              <NextPiece key={idx} nextPiece={piece} idx={idx} />
+            ))}
           </div>
         </div>
         <div>

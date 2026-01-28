@@ -1,8 +1,8 @@
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { Server } from 'socket.io';
 import { createServer } from 'http';
+import path from 'path';
+import { Server } from 'socket.io';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,10 +13,8 @@ const io = new Server(server);
 
 const port = 3000;
 
-// Servir les fichiers statiques du frontend
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
-// API routes
 app.get('/game/start', (req, res) => {
   res.json({ status: 'send initial game state' });
 });

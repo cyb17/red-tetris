@@ -10,6 +10,91 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- <div>
+      <style>
+        :root {
+          /* 你提供的变量 */
+          --lh-tight: 1.1;
+          --lh-normal: 1.4;
+          --lh-loose: 1.6;
+          --font-ui: 'Inter', system-ui, sans-serif;
+          --font-mono: 'JetBrains Mono', monospace;
+          --font-display: 'Orbitron', sans-serif;
+          --fs-title-xl: 48px;
+          --fs-title-lg: 32px;
+          --fs-score: 28px;
+          --fs-body: 16px;
+          --fs-small: 14px;
+
+          /* 建议配色 */
+          --bg-dark: #0a0a0c;
+          --accent-neon: #00f3ff;
+          --text-main: #e0e0e0;
+        }
+
+        body {
+          background: var(--bg-dark);
+          color: var(--text-main);
+          font-family: var(--font-ui);
+          padding: 40px;
+          line-height: var(--lh-normal);
+        }
+
+        .header-title {
+          font-family: var(--font-display);
+          font-size: var(--fs-title-xl);
+          line-height: var(--lh-tight);
+          text-transform: uppercase;
+          color: var(--accent-neon);
+          margin-bottom: 20px;
+          letter-spacing: 2px; /* 进一步增强科技感 */
+        }
+
+        .score-card {
+          border-left: 4px solid var(--accent-neon);
+          padding: 15px;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(8px);
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .score-value {
+          font-family: var(--font-mono);
+          font-size: var(--fs-score);
+          line-height: var(--lh-tight);
+        }
+
+        .description {
+          font-size: var(--fs-body);
+          line-height: var(--lh-loose);
+          max-width: 500px;
+          margin-top: 20px;
+          color: #999;
+        }
+
+        .status-tag {
+          font-family: var(--font-mono);
+          font-size: var(--fs-small);
+          background: #222;
+          padding: 4px 8px;
+        }
+      </style>
+
+      <div class="header-title">System Active</div>
+
+      <div class="score-card">
+        <div style="font-size: var(--fs-small); opacity: 0.7">CURRENT VELOCITY</div>
+        <div class="score-value">1,284.52 m/s</div>
+      </div>
+
+      <p class="description">
+        系统正在监测实时子空间波动。所有参数均已根据最新的协议进行校准。
+        如果发现异常偏离，请立即启动手动覆盖程序。
+      </p>
+
+      <span class="status-tag">STATUS: OPTIMAL</span>
+    </div> -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

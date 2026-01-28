@@ -1,6 +1,25 @@
 @import 'tailwindcss';
 
 :root {
+  /* Line-height & Spacing */
+  --lh-tight: 1.1; /* 数字 / Score */
+  --lh-normal: 1.4; /* UI 文本 */
+  --lh-loose: 1.6; /* 描述性文本 */
+
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Orbitron', sans-serif;
+
+  --fs-title-xl: 48px;
+  --fs-title-lg: 32px;
+  --fs-score: 28px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+
+  --bg-dark: #0a0a0c;
+  --accent-neon: #00f3ff;
+  --text-main: #e0e0e0;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

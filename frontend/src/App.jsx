@@ -3,6 +3,7 @@ import Layout from './Layout';
 import About from './pages/AboutPage';
 import Game from './pages/GamePage';
 import Home from './pages/HomePage';
+import Leaderboard from './pages/Leaderboard';
 import Lobby from './pages/LobbyPage';
 import Login from './pages/LoginPage';
 import Menu from './pages/MenuPage';
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/single" element={<SingleGame />} />
         <Route path="/multi" element={<MultiGame />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

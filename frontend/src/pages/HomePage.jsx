@@ -1,18 +1,18 @@
+import { useNavigate } from 'react-router';
+
 export default function Home() {
-  // TODO: 将这些处理函数移到独立的文件中实现
+  const navigate = useNavigate();
+
   const handleLogin = () => {
-    // 登录逻辑将在其他文件中实现
-    console.log('Login clicked');
+    navigate('/login');
   };
 
   const handleSignUp = () => {
-    // 注册逻辑将在其他文件中实现
-    console.log('Sign Up clicked');
+    navigate('/signup');
   };
 
   const handlePlayAsGuest = () => {
-    // 游客模式逻辑将在其他文件中实现
-    console.log('Play as Guest clicked');
+    navigate('/game');
   };
 
   return (

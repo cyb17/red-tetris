@@ -8,7 +8,9 @@ export default function Board({ board, status, onStart }) {
       ))}
       {status === GAME_STATUS.WAITING ? (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <button onClick={onStart}>Play</button>
+          <button className="border-3 border-white bg-(--color-bg)" onClick={onStart}>
+            Play
+          </button>
         </div>
       ) : null}
       {status === GAME_STATUS.GAME_OVER ? (

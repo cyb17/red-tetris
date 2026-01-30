@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -20,50 +22,50 @@ export default function SignUp() {
   };
 
   return (
-    <section>
-      <div>
-        <form onSubmit={handleSignUp}>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-            />
-          </div>
+    <section className="flex flex-col gap-6 border border-(--color-border) p-8">
+      <h2 className="text-center font-bold">SIGN UP</h2>
+      <form className="flex flex-col gap-4" onSubmit={handleSignUp}>
+        <Input
+          label="Username / email"
+          type="text"
+          id="username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          required
+        />
 
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
+        <Input
+          label="Password"
+          type="password"
+          id="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
 
-          <div>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
-            />
-          </div>
+        <Input
+          label="Confirm Password"
+          type="password"
+          id="confirmPassword"
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+          required
+        />
 
-          <button type="submit">Register</button>
-          <div>
-            <button onClick={() => navigate(-1)} type="button">
-              Back
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="mt-4">
+          <Button name="Register" type="submit" />
+        </div>
+
+        <div className="flex flex-col items-start gap-2 my-2">
+          <button
+            onClick={() => navigate(-1)}
+            type="button"
+            className="underline underline-offset-3 decoration-(--color-border) font-bold"
+          >
+            Back
+          </button>
+        </div>
+      </form>
     </section>
   );
 }

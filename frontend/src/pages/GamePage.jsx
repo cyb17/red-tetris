@@ -63,7 +63,7 @@ export default function Game() {
       <div className="flex flex-col justify-around items-center">
         <NextPiece nextPieces={state.nextPieces} />
         <div>
-          <div>SCORE: {state.score}</div>
+          <div className="font-(--font-mono)">SCORE: {state.score}</div>
           <div>LINES: {state.clearedLines}</div>
         </div>
       </div>

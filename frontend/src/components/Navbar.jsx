@@ -18,19 +18,19 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="border-solid border-black">
-      <div className="flex justify-between p-2 ml-2 mr-2">
-        <div className="flex justify-between gap-4">
+    <nav className="flex justify-between p-2 my-3 mx-3">
+      <div className="flex justify-between items-center gap-8">
+        <span className="border-2 border-double px-4 py-2">
           <Link to="/">RED TETRIS</Link>
-          <Link to="/about">About</Link>
-          <Link to="/Leaderboard">Leaderboard</Link>
-        </div>
+        </span>
+        <Link to="/Leaderboard">Leaderboard</Link>
+        <Link to="/about">About</Link>
+      </div>
 
-        <div>
-          <button onClick={handleToggleTheme}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
-          <button onClick={handleLogout}>Settings</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
+      <div className="flex gap-8">
+        <button onClick={handleToggleTheme}>{darkMode ? 'Light' : 'Dark'}</button>
+        <button onClick={handleLogout}>Settings</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </nav>
   );

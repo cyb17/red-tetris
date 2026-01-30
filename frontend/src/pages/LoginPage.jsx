@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,45 +20,46 @@ export default function Login() {
   };
 
   return (
-    <section>
-      <div>
-        <form onSubmit={handleLogin}>
-          <div>
-            <label htmlFor="identifier">Username / Email</label>
-            <input
-              type="text"
-              id="identifier"
-              placeholder="Enter your username or email"
-              value={identifier}
-              onChange={e => setIdentifier(e.target.value)}
-              required
-            />
-          </div>
+    <section className="flex flex-col gap-6 border border-(--color-border) p-8">
+      <h2 className="text-center font-bold">LOGIN</h2>
+      <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+        <Input
+          label="Username / Email"
+          type="text"
+          id="identifier"
+          value={identifier}
+          onChange={e => setIdentifier(e.target.value)}
+          required
+        />
 
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-          </div>
+        <Input
+          label="Password"
+          type="password"
+          id="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
 
-          <div>
-            <button type="button" onClick={handleForgotPassword}>
-              Forgot Password?
-            </button>
-            <button onClick={() => navigate(-1)} type="button">
-              Back
-            </button>
-          </div>
+        <Button name="Login" type="submit" />
 
-          <button type="submit">Login</button>
-        </form>
-      </div>
+        <div className="flex flex-col items-start gap-2 my-2">
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="underline underline-offset-3 decoration-(--color-border)"
+          >
+            Forgot Password?
+          </button>
+          <button
+            onClick={() => navigate(-1)}
+            type="button"
+            className="underline underline-offset-3 decoration-(--color-border) font-bold"
+          >
+            Back
+          </button>
+        </div>
+      </form>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section className="max-w-3xl mx-auto px-4 py-12">
+    <section className="">
       <h2 className="text-3xl font-bold mb-8">About Tetris</h2>
       <p className="mb-6 text-lg leading-relaxed">
         Tetris is a puzzle game that was born in the mid-1980s, at a time when personal computing

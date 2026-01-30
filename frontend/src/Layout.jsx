@@ -8,11 +8,11 @@ export default function Layout() {
         <Navbar />
       </header>
 
-      <main>
+      <main className="w-2xl min-h-140 flex flex-col justify-center items-center mx-auto my-3 p-2">
         <Outlet />
       </main>
 
-      <footer className="text-center">Built with ❤️</footer>
+      <footer className="text-center my-1 p-1">Built with ❤️</footer>
     </div>
   );
 }

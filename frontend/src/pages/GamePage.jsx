@@ -46,11 +46,15 @@ export default function Game() {
       : mergePieceToBoard(state.board, state.piece);
 
   return (
-    <div className="flex justify-center gap-5">
-      <div>
-        <div>
-          <button onClick={() => dispatch({ type: EVENTS.PAUSE })}>Pause</button>
-          <button onClick={() => dispatch({ type: EVENTS.START })}>Play</button>
+    <sector className="flex justify-center gap-5 p-20 bg-(--color-bg-light) border border-(--color-border)">
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-around gap-3 border">
+          <button onClick={() => dispatch({ type: EVENTS.PAUSE })} className="border p-1">
+            Pause
+          </button>
+          <button onClick={() => dispatch({ type: EVENTS.START })} className="border p-1">
+            Play
+          </button>
         </div>
         <div>
           <Board
@@ -67,6 +71,6 @@ export default function Game() {
           <div>LINES: {state.clearedLines}</div>
         </div>
       </div>
-    </div>
+    </sector>
   );
 }

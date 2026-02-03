@@ -22,7 +22,7 @@ export default function SignUp() {
   };
 
   return (
-    <section className="flex flex-col gap-6 border border-(--color-border) p-12 mt-15 mx-60">
+    <section className="flex flex-col gap-6 bg-(--color-bg-light) border border-(--color-border) p-12 mt-15 mx-60">
       <h2 className="text-center text-2xl font-bold">SIGN UP</h2>
       <form className="flex flex-col m-auto gap-4" onSubmit={handleSignUp}>
         <Input

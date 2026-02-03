@@ -8,7 +8,10 @@ export default function Board({ board, status, onStart }) {
       ))}
       {status === GAME_STATUS.WAITING ? (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <button className="border-3 border-white bg-(--color-bg)" onClick={onStart}>
+          <button
+            className="border-3 border-white bg-(--color-bg) p-2 rounded-2xl"
+            onClick={onStart}
+          >
             Play
           </button>
         </div>

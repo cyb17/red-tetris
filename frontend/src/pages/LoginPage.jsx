@@ -20,7 +20,7 @@ export default function Login() {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center border border-(--color-border) gap-4 md:gap-6 p-6 md:p-12 mt-15 mx-60 min-w-84">
+    <section className="flex flex-col justify-center items-center bg-(--color-bg-light) border border-(--color-border) gap-4 md:gap-6 p-6 md:p-12 mt-15 mx-60 min-w-84">
       <h2 className="text-center text-2xl font-bold">LOGIN</h2>
       <form className="flex flex-col justify-center items-center gap-4" onSubmit={handleLogin}>
         <Input
@@ -43,7 +43,7 @@ export default function Login() {
 
         <Button name="Login" type="submit" />
 
-        <div className="flex flex-col items-start gap-2 my-2">
+        <div className="w-full flex flex-col items-start gap-2 my-2">
           <button
             type="button"
             onClick={handleForgotPassword}

@@ -1,9 +1,14 @@
 @import 'tailwindcss';
 
 :root {
+  /* light theme (default) */
+
   --color-bg: #f2f2f2;
-  --color-text: #4d4d4d;
+  --color-bg-light: #ffffffff;
+  --color-text: #616161;
   --color-border: #b3b3b3;
+
+  /* dark theme  */
 
   /* Line-height & Spacing */
   --lh-tight: 1.1; /* 数字 / Score */

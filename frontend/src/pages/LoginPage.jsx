@@ -20,9 +20,9 @@ export default function Login() {
   };
 
   return (
-    <section className="flex flex-col gap-6 border border-(--color-border) p-8">
-      <h2 className="text-center font-bold">LOGIN</h2>
-      <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+    <section className="flex flex-col justify-center items-center border border-(--color-border) gap-4 md:gap-6 p-6 md:p-12 mt-15 mx-60 min-w-84">
+      <h2 className="text-center text-2xl font-bold">LOGIN</h2>
+      <form className="flex flex-col justify-center items-center gap-4" onSubmit={handleLogin}>
         <Input
           label="Username / Email"
           type="text"

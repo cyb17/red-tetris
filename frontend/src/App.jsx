@@ -17,6 +17,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -25,7 +26,6 @@ export default function App() {
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/single" element={<SingleGame />} />
         <Route path="/multi" element={<MultiGame />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

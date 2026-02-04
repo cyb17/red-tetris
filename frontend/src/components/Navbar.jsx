@@ -17,37 +17,42 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-(--color-bg-light) border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-(--color-bg-light) relative">
+      <div className="mx-auto px-4 sm:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <span className="border-2 border-double px-4 py-2 text-sm sm:text-base">
             <Link to="/">RED TETRIS</Link>
           </span>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            <Link to="/Leaderboard" className="text-gray-900 hover:opacity-70 transition">
+            <Link
+              to="/Leaderboard"
+              className="text-gray-900 transition rounded px-3 py-1 hover:bg-gray-200"
+            >
               Leaderboard
             </Link>
-            <Link to="/about" className="text-gray-900 hover:opacity-70 transition">
+            <Link
+              to="/about"
+              className="text-gray-900 transition rounded px-3 py-1 hover:bg-gray-200"
+            >
               About
             </Link>
             <button
               onClick={handleSettingsModal}
-              className="text-gray-900 hover:opacity-70 transition"
+              className="text-gray-900 transition rounded px-3 py-1 hover:bg-gray-200"
             >
               Settings
             </button>
             <button
               onClick={handleToggleTheme}
-              className="text-gray-900 hover:opacity-70 transition text-4xl"
+              className="text-gray-900 transition text-4xl rounded px-3 hover:bg-gray-200"
             >
               ☼
             </button>
             <button
               onClick={handleLogout}
-              className="text-gray-900 hover:opacity-70 transition text-2xl"
+              className="text-gray-900 transition text-2xl pb-1.5 rounded px-3 py-1 hover:bg-gray-200"
               title="Logout"
             >
               ⏻
@@ -66,54 +71,56 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t">
-          <div className="px-4 py-3 space-y-3">
-            <Link
-              to="/Leaderboard"
-              className="block py-2 text-gray-900 hover:opacity-70 transition"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Leaderboard
-            </Link>
-            <Link
-              to="/about"
-              className="block py-2 text-gray-900 hover:opacity-70 transition"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-            <button
-              onClick={() => {
-                handleToggleTheme();
-                setIsMenuOpen(false);
-              }}
-              className="block w-full text-left py-2 text-gray-900 hover:opacity-70 transition"
-            >
-              Theme
-            </button>
-            <button
-              onClick={() => {
-                handleSettingsModal();
-                setIsMenuOpen(false);
-              }}
-              className="block w-full text-left py-2 text-gray-900 hover:opacity-70 transition"
-            >
-              Settings
-            </button>
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsMenuOpen(false);
-              }}
-              className="block w-full text-left py-2 text-gray-900 hover:opacity-70 transition"
-              title="Logout"
-            >
-              ⏻ Logout
-            </button>
-          </div>
+      <div
+        className={`md:hidden border-t overflow-hidden transition-all duration-500 ease-out absolute left-0 right-0 top-full bg-(--color-bg-light) ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-4 py-3 space-y-3">
+          <Link
+            to="/Leaderboard"
+            className="block w-full py-2 text-gray-900 transition px-4 hover:bg-gray-200"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Leaderboard
+          </Link>
+          <Link
+            to="/about"
+            className="block w-full py-2 text-gray-900 transition px-4 hover:bg-gray-200"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            About
+          </Link>
+          <button
+            onClick={() => {
+              handleSettingsModal();
+              setIsMenuOpen(false);
+            }}
+            className="block w-full text-left py-2 text-gray-900 transition px-4 hover:bg-gray-200"
+          >
+            Settings
+          </button>
+          <button
+            onClick={() => {
+              handleToggleTheme();
+              setIsMenuOpen(false);
+            }}
+            className="flex items-center gap-2 w-full text-left py-2 text-gray-900 transition px-4 hover:bg-gray-200"
+          >
+            <span className="text-2xl">☼</span> Light
+          </button>
+          <button
+            onClick={() => {
+              handleLogout();
+              setIsMenuOpen(false);
+            }}
+            className="block w-full text-left py-2 text-gray-900 transition px-4 hover:bg-gray-200"
+            title="Logout"
+          >
+            ⏻ Logout
+          </button>
         </div>
-      )}
+      </div>
     </nav>
   );
 }

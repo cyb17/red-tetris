@@ -6,6 +6,7 @@
   --color-bg: #f2f2f2;
   --color-bg-light: #ffffffff;
   --color-text: #616161;
+  --color-text-light: hsl(0, 0%, 100%);
   --color-border: #b3b3b3;
 
   /* dark theme  */

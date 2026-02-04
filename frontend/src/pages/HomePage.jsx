@@ -17,9 +17,9 @@ export default function Home() {
   };
 
   return (
-    <section className="w-full max-w-2xl flex flex-col items-center justify-center gap-6 p-20 mx-auto bg-(--color-bg-light) border border-(--color-border)">
-      <h1 className="text-7xl sm:text-8xl mb-8 font-bold text-center">TETRIS</h1>
-      <div className="flex flex-col items-center gap-4 w-full">
+    <section className="flex flex-col items-center justify-center sm:w-4/5 border border-(--color-border) py-15 px-15 sm:px-20 bg-(--color-bg-light)">
+      <h1 className="text-6xl sm:text-8xl mb-8 font-bold text-center">TETRIS</h1>
+      <div className="flex flex-col items-center gap-4">
         <Button name="Login" onClick={handleLogin} />
         <Button name="Sign Up" onClick={handleSignUp} />
         <Button name="Play as Guest" onClick={handlePlayAsGuest} />

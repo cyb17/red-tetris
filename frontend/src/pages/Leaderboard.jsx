@@ -68,19 +68,19 @@ export default function Leaderboard() {
   return (
     <section className="flex flex-col justify-center items-center gap-3 p-2 ">
       <h1 className="text-6xl font-bold">Leaderboard</h1>
-      <hr className="border-t-2 border-(--color-border) w-2/3 mb-5" />
+      <hr className="border-t-2 border-(--color-border) w-2/3 sm:mb-5" />
 
       <input
         id="search"
         name="search"
         type="text"
-        placeholder="Chercher un joueur..."
+        placeholder="search a player..."
         value={searchTerm}
         onChange={e => {
           setSearchTerm(e.target.value);
           setCurrentPage(1);
         }}
-        className="px-4 py-2 border rounded w-1/2"
+        className="px-4 py-2 border rounded"
       />
 
       <table className="w-1/2 border mb-3">

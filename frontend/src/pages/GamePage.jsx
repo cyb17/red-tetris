@@ -46,7 +46,7 @@ export default function Game() {
       : mergePieceToBoard(state.board, state.piece);
 
   return (
-    <sector className="flex justify-center gap-5 p-20 bg-(--color-bg-light) border border-(--color-border)">
+    <sector className="flex justify-center p-4 w-full gap-5 bg-(--color-bg-light) border border-(--color-border)">
       <div className="flex flex-col gap-2">
         <div className="flex justify-around gap-3 border">
           <button onClick={() => dispatch({ type: EVENTS.PAUSE })} className="border p-1">

@@ -19,7 +19,7 @@
   --font-ui: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   line-height: var(--lh-normal);
 
   /* color-scheme: light dark; */

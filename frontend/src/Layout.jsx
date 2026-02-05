@@ -3,12 +3,12 @@ import Navbar from './components/Navbar';
 
 export default function Layout() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
       <header className="sticky top-0 z-10">
         <Navbar />
       </header>
 
-      <main className="flex-1 w-full flex flex-col items-center justify-center bg-(--color-bg) border-y-2">
+      <main className="w-full flex flex-col items-center justify-center bg-(--color-bg) border-y-2">
         <Outlet />
       </main>
 

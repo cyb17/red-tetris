@@ -20,7 +20,7 @@ export default function Navbar() {
     <nav className="bg-(--color-bg-light) relative">
       <div className="mx-auto px-4 sm:px-8">
         <div className="flex justify-between items-center h-16">
-          <span className="border-2 border-double px-4 py-2 text-sm sm:text-base">
+          <span className="border-2 border-double px-4 py-2 transition hover:bg-(--color-bg) font-bold text-sm sm:text-base">
             <Link to="/">RED TETRIS</Link>
           </span>
 
@@ -72,8 +72,8 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden border-t overflow-hidden transition-all duration-500 ease-out absolute left-0 right-0 top-full bg-(--color-bg-light) ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        className={`md:hidden border-t overflow-hidden transition-all duration-500 ease-out absolute inset-x-0 top-full bg-(--color-bg-light) ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-30'
         }`}
       >
         <div className="px-4 py-3 space-y-3">
@@ -105,7 +105,7 @@ export default function Navbar() {
               handleToggleTheme();
               setIsMenuOpen(false);
             }}
-            className="flex items-center gap-2 w-full text-left py-2 text-gray-900 transition px-4 hover:bg-gray-200"
+            className="flex items-center gap-2 w-full text-left py-1 text-gray-900 transition px-4 hover:bg-gray-200"
           >
             <span className="text-2xl">☼</span> Light
           </button>
